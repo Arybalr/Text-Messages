@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
+
+    <title>Output</title>
+</head>
+
+<body class="formatted-script">
+
+    <script>
+        // Read the data from localStorage
+        const jsonData = localStorage.getItem('formattedScriptData');
+        if (jsonData) {
+            const data = JSON.parse(jsonData);
+
+            // Use the data to update the content of this HTML file
+            const script = data.script;
+            const speaker1Prefix = data.speaker1Prefix;
+            const speaker2Prefix = data.speaker2Prefix;
+
+            const lines = script.split('\n');
+            const formattedScript = lines.map((line) => {
+                if (line.startsWith(speaker1Prefix)) {
+                    line = line.slice(speaker1Prefix.length).trim();
+                    return `<p class="receive">${line}</p>`;
+                } else if (line.startsWith(speaker2Prefix)) {
+                    line = line.slice(speaker2Prefix.length).trim();
+                    return `<p class="send">${line}</p>`;
+                } else {
+                    return `<p>${line}</p>`;
+                }
+            }).join('');
+
+            const formattedScriptContainer = document.querySelector(".formatted-script");
+            formattedScriptContainer.innerHTML = formattedScript;
+        }
+    </script>
+</body>
+
+</html>

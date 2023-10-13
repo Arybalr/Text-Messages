@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Untitled Document</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #000000;
+            font-size: 3rem;
+            margin-top: 2rem;
+        }
+
+        h2 {
+            color: #000000;
+            font-size: 2rem;
+        }
+
+        .Pefixes {
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px auto; /* Center the form horizontally */
+        }
+
+        .Pefixes h3 {
+            font-size: 1.5rem;
+        }
+
+        .Pefixes input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+		#scriptText {
+			min-width:100%;
+			max-width:140%;
+			min-height:50px;
+			height:100%;
+			width:50%;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+        }
+
+        #updateButton {
+            background-color: #0074d9;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #updateButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+        
+</head>
+
+<body>
+    <h1>The Fake Convo</h1>
+    <h2>Input Your Script Details</h2>
+
+    <div class="Pefixes">
+        <h3>Prefix For Speaker 1</h3>
+        <input id="speaker1Prefix" type="text" value="Speaker 1">
+        <p></p>
+        <h3>Prefix For Speaker 2</h3>
+        <input id="speaker2Prefix" type="text" value="Speaker 2">
+    </div>
+
+    <textarea id="scriptText" name="text" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'"></textarea>
+
+	<div><button id="updateButton">Submit Script</button></div>
+
+    <script>
+        const textarea = document.getElementById("scriptText");
+        const speaker1PrefixInput = document.getElementById("speaker1Prefix");
+        const speaker2PrefixInput = document.getElementById("speaker2Prefix");
+
+        const updateButton = document.getElementById("updateButton");
+
+        updateButton.addEventListener("click", () => {
+            const script = textarea.value;
+            const speaker1Prefix = speaker1PrefixInput.value.trim();
+            const speaker2Prefix = speaker2PrefixInput.value.trim();
+
+            // Create an object with the script and prefixes data
+            const data = {
+                script: script,
+                speaker1Prefix: speaker1Prefix,
+                speaker2Prefix: speaker2Prefix,
+            };
+
+            // Convert the data to JSON
+            const jsonData = JSON.stringify(data);
+
+            // Send the data to the other HTML file via localStorage
+            localStorage.setItem('formattedScriptData', jsonData);
+
+            // Redirect to the other HTML file
+            window.location.href = 'output.html';
+        });
+    </script>
+</body>
+
+</html>
